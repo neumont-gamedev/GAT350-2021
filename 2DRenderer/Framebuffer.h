@@ -14,6 +14,7 @@ public:
 	void DrawPoint(int x, int y, const color_t& color);
 	void DrawRect(int x, int y, int width, int height, const color_t& color);
 	void DrawLine(int x1, int y1, int x2, int y2, const color_t& color);
+	void DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, const color_t& color);
 	void DrawCircle(int x, int y, int radius, const color_t& color);
 
 public:
