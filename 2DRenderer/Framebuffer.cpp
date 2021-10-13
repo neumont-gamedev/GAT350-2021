@@ -1,4 +1,5 @@
 #include "Framebuffer.h"
+#include "Image.h"
 
 //#define SLOPE
 //#define DDA
@@ -209,16 +210,16 @@ void Framebuffer::DrawQuadraticCurve(int x1, int y1, int x2, int y2, int x3, int
         float t1 = i * dt;
         float t2 = (i + 1) * dt;
 
-        float a1 = (float)pow((1.0f - t1), 2.0f);
-        float b1 = 2.0f * (1.0f - t1) * t1;
-        float c1 = (float)pow(t1, 2.0f);
+        float a1 = (float)pow((1 - t1), 2);
+        float b1 = 2 * (1 - t1) * t1;
+        float c1 = (float)pow(t1, 2);
 
         int sx1 = (int)(a1 * x1 + b1 * x2 + c1 * x3);
         int sy1 = (int)(a1 * y1 + b1 * y2 + c1 * y3);
 
-        float a2 = (float)pow((1.0f - t2), 2.0f);
-        float b2 = 2.0f * (1.0f - t2) * t2;
-        float c2 = (float)pow(t2, 2.0f);
+        float a2 = (float)pow((1 - t2), 2);
+        float b2 = 2 * (1 - t2) * t2;
+        float c2 = (float)pow(t2, 2);
 
         int sx2 = (int)(a2 * x1 + b2 * x2 + c2 * x3);
         int sy2 = (int)(a2 * y1 + b2 * y2 + c2 * y3);
@@ -235,18 +236,18 @@ void Framebuffer::DrawCubicCurve(int x1, int y1, int x2, int y2, int x3, int y3,
         float t1 = i * dt;
         float t2 = (i + 1) * dt;
 
-        float a1 = (float)pow((1.0f - t1), 3.0f);
-        float b1 = 3.0f * (float)pow((1.0f - t1), 2.0f) * t1;
-        float c1 = 3.0f * (1.0f - t1) * (float)pow(t1, 2.0f);
-        float d1 = (float)pow(t1, 3.0f);
+        float a1 = (float)pow((1 - t1), 3);
+        float b1 = 3 * (float)pow((1 - t1), 2) * t1;
+        float c1 = 3 * (1 - t1) * (float)pow(t1, 2);
+        float d1 = (float)pow(t1, 3);
 
         int sx1 = (int)(a1 * x1 + b1 * x2 + c1 * x3 + d1 * x4);
         int sy1 = (int)(a1 * y1 + b1 * y2 + c1 * y3 + d1 * y4);
 
-        float a2 = (float)pow((1.0f - t2), 3.0f);
-        float b2 = 3.0f * (float)pow((1.0f - t2), 2.0f) * t2;
-        float c2 = 3.0f * (1.0f - t2) * (float)pow(t2, 2.0f);
-        float d2 = (float)pow(t2, 3.0f);
+        float a2 = (float)pow((1 - t2), 3);
+        float b2 = 3 * (float)pow((1 - t2), 2) * t2;
+        float c2 = 3 * (1 - t2) * (float)pow(t2, 2);
+        float d2 = (float)pow(t2, 3);
 
         int sx2 = (int)(a2 * x1 + b2 * x2 + c2 * x3 + d2 * x4);
         int sy2 = (int)(a2 * y1 + b2 * y2 + c2 * y3 + d2 * y4);
@@ -258,4 +259,19 @@ void Framebuffer::DrawCubicCurve(int x1, int y1, int x2, int y2, int x3, int y3,
 int Framebuffer::Lerp(int a, int b, float t)
 {
     return (int)(a + ((b - a) * t));
+}
+
+void Framebuffer::DrawImage(int x1, int y1, Image* image)
+{
+    for (int y = 0; y < image->height; y++)
+    {
+        int sy = y1 + y;
+        for (int x = 0; x < image->width; x++)
+        {
+            int sx = x1 + x;
+            if (sx < 0 || sx >= width || sy < 0 || sy >= height) continue;
+
+            ((color_t*)buffer)[sx + (sy * width)] = ((color_t*)image->buffer)[x + (y * image->width)];
+        }
+    }
 }

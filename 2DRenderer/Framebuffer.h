@@ -21,6 +21,9 @@ public:
 	void DrawQuadraticCurve(int x1, int y1, int x2, int y2, int x3, int y3, int steps, const color_t& color);
 	void DrawCubicCurve(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int steps, const color_t& color);
 
+	void DrawImage(int x1, int y1, class Image* image);
+
+private:
 	void DrawCircleOctants(int cx, int cy, int x, int y, const color_t& color);
 	int Lerp(int a, int b, float t);
 
