@@ -3,11 +3,6 @@
 #include <fstream>
 #include <iostream>
 
-Image::~Image()
-{
-    delete[] buffer;
-}
-
 bool Image::Load(const std::string& filename, uint8_t alpha)
 {
     std::ifstream stream(filename, std::ios::binary);
@@ -28,21 +23,21 @@ bool Image::Load(const std::string& filename, uint8_t alpha)
     }
 
     // get the image width and height
-    width = *((int*)(&header[18]));
-    height = *((int*)(&header[22]));
+    colorBuffer.width = *((int*)(&header[18]));
+    colorBuffer.height = *((int*)(&header[22]));
 
     // set the image pitch (uses color_t (RGBA) for pixel)
-    int pitch = width * sizeof(color_t);
+    colorBuffer.pitch = colorBuffer.width * sizeof(color_t);
 
     // create the image buffer 
-    buffer = new uint8_t[width * pitch];
+    colorBuffer.data = new uint8_t[colorBuffer.width * colorBuffer.pitch];
 
     // get bits per pixel and bytes per pixel
     uint16_t bitsPerPixel = *((uint16_t*)(&header[28]));
     uint16_t bytesPerPixel = bitsPerPixel / 8;
 
     // calculate size of images (width * height * bytes per pixel)
-    size_t size = width * height * bytesPerPixel;
+    size_t size = colorBuffer.width * colorBuffer.height * bytesPerPixel;
 
     // create data buffer to read image from file
     uint8_t* data = new uint8_t[size];
@@ -50,7 +45,7 @@ bool Image::Load(const std::string& filename, uint8_t alpha)
     // read file into data buffer
     stream.read((char*)data, size);
        
-    for (int i = 0; i < width * height; i++)
+    for (int i = 0; i < colorBuffer.width * colorBuffer.height; i++)
     {
         color_t color;
 
@@ -61,7 +56,7 @@ bool Image::Load(const std::string& filename, uint8_t alpha)
         color.r = data[index + 2];
         color.a = alpha;
 
-        ((color_t*)(buffer))[i] = color;
+        ((color_t*)(colorBuffer.data))[i] = color;
     }
 
     delete[] data;
@@ -72,19 +67,16 @@ bool Image::Load(const std::string& filename, uint8_t alpha)
 
 void Image::Flip()
 {
-    // set the pitch (width * number of bytes per pixel)
-    int pitch = width * sizeof(color_t);
-    
     // create temporary line to store data
-    uint8_t* temp = new uint8_t[pitch];
+    uint8_t* temp = new uint8_t[colorBuffer.pitch];
     
-    for (int i = 0; i < height / 2; i++)
+    for (int i = 0; i < colorBuffer.height / 2; i++)
     {
-        uint8_t* line1 = &((buffer)[i * pitch]);
-        uint8_t* line2 = &((buffer)[((height - 1) - i) * pitch]);
-        memcpy(temp, line1, pitch);
-        memcpy(line1, line2, pitch);
-        memcpy(line2, temp, pitch);
+        uint8_t* line1 = &((colorBuffer.data)[i * colorBuffer.pitch]);
+        uint8_t* line2 = &((colorBuffer.data)[((colorBuffer.height - 1) - i) * colorBuffer.pitch]);
+        memcpy(temp, line1, colorBuffer.pitch);
+        memcpy(line1, line2, colorBuffer.pitch);
+        memcpy(line2, temp, colorBuffer.pitch);
     }
     delete[] temp;
 }
