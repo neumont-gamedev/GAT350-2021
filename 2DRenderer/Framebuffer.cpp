@@ -38,11 +38,9 @@ void Framebuffer::DrawPoint(int x, int y, const color_t& color)
 {
     if (x < 0 || x >= colorBuffer.width || y < 0 || y >= colorBuffer.height) return;
 
-    //((color_t*)(colorBuffer.data))[x + y * colorBuffer.width] = color;
-
     // alpha blending
     uint8_t alpha = color.a;
-    uint8_t invAlpha = 255 - alpha;
+    uint8_t invAlpha = 255 - alpha; // 1(255) - alpha
 
     color_t& destColor = ((color_t*)(colorBuffer.data))[x + y * colorBuffer.width];
 
@@ -289,7 +287,6 @@ void Framebuffer::DrawImage(int x1, int y1, Image* image)
 
             color_t color = ((color_t*)image->colorBuffer.data)[x + (y * image->colorBuffer.width)];
             DrawPoint(sx, sy, color);
-            //((color_t*)colorBuffer.data)[sx + (sy * colorBuffer.width)] = ((color_t*)image->colorBuffer.data)[x + (y * image->colorBuffer.width)];
         }
     }
 }

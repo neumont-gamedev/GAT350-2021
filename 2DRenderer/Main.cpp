@@ -17,7 +17,7 @@ int main(int, char**)
 	std::unique_ptr<Framebuffer> framebuffer = std::make_unique<Framebuffer>(renderer.get(), renderer->width, renderer->height);
 	
 	std::unique_ptr<Image> image = std::make_unique<Image>();
-	image->Load("../resources/flower.bmp", 128);
+	image->Load("../resources/flower.bmp", 210);
 	image->Flip();
 
 	bool quit = false;
@@ -38,9 +38,9 @@ int main(int, char**)
 		//{
 		//	framebuffer->DrawPoint(rand() % renderer->width, rand() % renderer->height, {0, 255, 0, 0});
 		//}
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 40; i++)
 		{
-			framebuffer->DrawRect(rand() % renderer->width, rand() % renderer->height, 50, 50, { (uint8_t)(rand() % 255), (uint8_t)(rand() % 255), (uint8_t)(rand() % 255), (uint8_t)(rand() % 200) });
+			framebuffer->DrawRect(rand() % renderer->width, rand() % renderer->height, 100, 100, { (uint8_t)((rand() % 2) * 255), (uint8_t)((rand() % 2) * 255), (uint8_t)((rand() % 2) * 255), (uint8_t)(rand() % 256) });
 		}
 		//for (int i = 0; i < 20; i++)
 		//{
