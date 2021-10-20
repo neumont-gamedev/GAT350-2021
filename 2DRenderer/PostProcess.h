@@ -10,5 +10,8 @@ namespace PostProcess
 	void Noise(const ColorBuffer& colorBuffer, uint8_t noise);
 	void Threshold(const ColorBuffer& colorBuffer, uint8_t threshold);
 	void Posterize(const ColorBuffer& colorBuffer, uint8_t levels);
-	void Blur(const ColorBuffer& colorBuffer);
+	void BoxBlur(const ColorBuffer& colorBuffer);
+	void GaussianBlur(const ColorBuffer& colorBuffer);
+	void Sharpen(const ColorBuffer& colorBuffer);
+	void Edge(const ColorBuffer& colorBuffer, uint8_t threshold);
 }

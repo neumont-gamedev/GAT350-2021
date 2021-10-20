@@ -3,13 +3,17 @@
 
 struct ColorBuffer
 {
-	ColorBuffer& operator = (const ColorBuffer& other)
+	ColorBuffer() = default;
+	ColorBuffer(const ColorBuffer & other)
 	{
 		width = other.width;
 		height = other.height;
-		data = new uint8_t[width * height * sizeof(color_t)];
 
-		memcpy(data, other.data, width * height * sizeof(color_t));
+		if (other.data)
+		{
+			data = new uint8_t[width * height * sizeof(color_t)];
+			memcpy(data, other.data, width * height * sizeof(color_t));
+		}
 	}
 
 	~ColorBuffer() { delete[] data; }
