@@ -8,5 +8,5 @@ public:
 	Geometry() = default;
 	virtual ~Geometry() = default;
 
-	virtual bool Hit(const ray_t& r, float tMin, float tMax, raycastHit_t& hit) = 0;
+	virtual bool Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit) = 0;
 };

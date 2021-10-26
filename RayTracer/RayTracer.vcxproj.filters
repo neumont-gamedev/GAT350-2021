@@ -35,6 +35,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -68,6 +71,12 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,7 +15,7 @@ glm::vec3 Scene::Trace(const ray_t& ray, float tMin, float tMax, raycastHit_t& h
 
 	if (rayHit)
 	{
-		return glm::vec3{ 1, 0, 0 };
+		return hit.normal;
 	}
 
 	return glm::vec3{ 0, 0, 0 };
