@@ -9,7 +9,7 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
 
     // c = distance from ray origin to sphere > radius
     // b = ray direction is facing away from sphere
-    if (c > 0 && b > 0) return false; 
+    if (c > 0 && b > 0) return false;
 
     // b^2 - 4ac
     float discriminant = (b * b) - (4 * a * c);
@@ -23,6 +23,7 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
             hit.t = t;
             hit.point = ray.pointAt(hit.t);
             hit.normal = (hit.point - center) / radius;
+            hit.material = material.get();
             return true;
         }
 
@@ -32,9 +33,12 @@ bool Sphere::Hit(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
             hit.t = t;
             hit.point = ray.pointAt(hit.t);
             hit.normal = (hit.point - center) / radius;
+            hit.material = material.get();
             return true;
         }
     }
+
+
 
     return false;
 }
