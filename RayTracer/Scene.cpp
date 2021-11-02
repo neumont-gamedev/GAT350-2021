@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-glm::vec3 Scene::Trace(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit)
+glm::vec3 Scene::Trace(const ray_t& ray, float tMin, float tMax, raycastHit_t& hit, int depth)
 {
 	float tClosest = tMax;
 	bool rayHit = false;
@@ -18,9 +18,9 @@ glm::vec3 Scene::Trace(const ray_t& ray, float tMin, float tMax, raycastHit_t& h
 		ray_t scattered;
 		glm::vec3 attenuation;
 
-		if (hit.material->Scatter(ray, hit, attenuation, scattered))
+		if (depth > 0 && hit.material->Scatter(ray, hit, attenuation, scattered))
 		{
-			return attenuation * Trace(scattered, tMin, tMax, hit);
+			return attenuation * Trace(scattered, tMin, tMax, hit, depth - 1);
 		}
 		else
 		{

@@ -27,3 +27,14 @@ protected:
 	glm::vec3 albedo{ 0, 0, 0 };
 	float fuzz = 0;
 };
+
+class Dielectric : public Material
+{
+public:
+	Dielectric(const glm::vec3& albedo, float refractionIndex) : albedo{ albedo }, refractionIndex{ refractionIndex } {}
+	virtual bool Scatter(const ray_t& ray, const raycastHit_t& hit, glm::vec3& attenuation, ray_t& scattered) const override;
+
+protected:
+	glm::vec3 albedo{ 1, 1, 1 };
+	float refractionIndex{ 1 };
+};

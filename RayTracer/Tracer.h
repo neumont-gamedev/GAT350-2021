@@ -3,12 +3,14 @@
 #include "ColorBuffer.h"
 
 class Scene;
+class Camera;
 
 class Tracer
 {
 public:
-	void Trace(const ColorBuffer& colorBuffer, Scene* scene);
+	void Trace(const ColorBuffer& colorBuffer, Scene* scene, Camera* camera);
 
 public:
-	int samples = 20;
+	int samples = 10;
+	int depth = 5;
 };
