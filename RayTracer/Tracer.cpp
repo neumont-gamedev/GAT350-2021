@@ -1,6 +1,7 @@
 #include "Tracer.h"
 #include "Scene.h"
 #include "Camera.h"
+#include <iostream>
 
 void Tracer::Trace(const ColorBuffer& colorBuffer, Scene* scene, Camera* camera)
 {
@@ -22,11 +23,13 @@ void Tracer::Trace(const ColorBuffer& colorBuffer, Scene* scene, Camera* camera)
 				raycastHit_t hit;
 				color += scene->Trace(ray, 0.001f, FLT_MAX, hit, depth);
 			}
+	
 			color.r = sqrt(color.r * invSamples);
 			color.g = sqrt(color.g * invSamples);
 			color.b = sqrt(color.b * invSamples);
 
 			colorBuffer.SetColor(x, y, Vec3ToColor(color));
 		}
+		std::cout << y << std::endl;
 	}
 }

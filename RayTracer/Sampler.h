@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Image.h"
 
 class Sampler
 {
@@ -24,20 +25,15 @@ public:
 class CheckerSampler : public Sampler {
 public:
     CheckerSampler() = default;
-    CheckerSampler(std::shared_ptr<Sampler> even, std::shared_ptr<Sampler> odd)
-        : even{ even }, odd{ odd }
-    {}
+    CheckerSampler(std::shared_ptr<Sampler> even, std::shared_ptr<Sampler> odd, float scale = 1)
+        : even{ even }, odd{ odd }, scale{ 1 } {}
+    CheckerSampler(const glm::vec3& color1, const glm::vec3& color2, float scale = 1)
+        : even{ std::make_shared<ColorSampler>(color1) }, odd{ std::make_shared<ColorSampler>(color2) }, scale{ scale } {}
 
-    CheckerSampler(const glm::vec3& color1, const glm::vec3& color2)
-        : even(std::make_shared<ColorSampler>(color1)), odd(std::make_shared<ColorSampler>(color2)) {}
-
-    virtual glm::vec3 value(const glm::vec2& uv, const glm::vec3& p) const override 
-    {
-        auto sines = sin(10 * p.x) * sin(10 * p.y) * sin(10 * p.z);
-        return (sines < 0) ? odd->value(uv, p) : even->value(uv, p);
-    }
+    virtual glm::vec3 value(const glm::vec2& uv, const glm::vec3& p) const override;
 
 public:
+    float scale = 1;
     std::shared_ptr<Sampler> odd;
     std::shared_ptr<Sampler> even;
 };
@@ -45,9 +41,11 @@ public:
 class TextureSampler : public Sampler {
 public:
     TextureSampler() = default;
+    TextureSampler(std::shared_ptr<Image> image, float scale = 1) : image{ image }, scale{ scale } {}
 
-    virtual glm::vec3 value(const glm::vec2& uv, const glm::vec3& p) const override
-    {
-        return glm::vec3{ 0, 1, 1 };
-    }
+    virtual glm::vec3 value(const glm::vec2& uv, const glm::vec3& p) const override;
+
+public:
+    float scale = 1;
+    std::shared_ptr<Image> image;
 };

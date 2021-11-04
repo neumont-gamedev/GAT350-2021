@@ -26,6 +26,17 @@ inline color_t Vec3ToColor(const glm::vec3& vec3)
 	return color;
 }
 
+inline glm::vec3 ColorToVec3(const color_t& color)
+{
+	glm::vec3 out_color;
+
+	out_color.r = color.r / 255.0f;
+	out_color.g = color.g / 255.0f;
+	out_color.b = color.b / 255.0f;
+
+	return out_color;
+}
+
 inline float dot(const glm::vec3& v1, const glm::vec3& v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
