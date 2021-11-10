@@ -32,7 +32,7 @@ glm::vec3 Scene::Trace(const ray_t& ray, float tMin, float tMax, raycastHit_t& h
 	// sky
 	glm::vec3 direction = glm::normalize(ray.direction);
 	float t = (direction.y + 1) * 0.5f;
-	return glm::lerp(glm::vec3(1, 1, 1), glm::vec3(0.5f, 0.7f, 1), t) * 0.15f;
+	return glm::lerp(glm::vec3(1, 1, 1), glm::vec3(0.5f, 0.7f, 1), t) * 0.25f;
 }
 
 void Scene::Add(std::unique_ptr<Geometry> geometry)

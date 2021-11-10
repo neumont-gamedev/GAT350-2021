@@ -26,7 +26,7 @@ class CheckerSampler : public Sampler {
 public:
     CheckerSampler() = default;
     CheckerSampler(std::shared_ptr<Sampler> even, std::shared_ptr<Sampler> odd, float scale = 1)
-        : even{ even }, odd{ odd }, scale{ 1 } {}
+        : even{ even }, odd{ odd }, scale{ scale } {}
     CheckerSampler(const glm::vec3& color1, const glm::vec3& color2, float scale = 1)
         : even{ std::make_shared<ColorSampler>(color1) }, odd{ std::make_shared<ColorSampler>(color2) }, scale{ scale } {}
 
