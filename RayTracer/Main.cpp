@@ -14,8 +14,8 @@ int main(int, char**)
 {
 	srand((unsigned int)time(nullptr));
 
-	const int WIDTH = 400;
-	const int HEIGHT = 300;
+	const int WIDTH = 800;
+	const int HEIGHT = 600;
 	int samples = 0;
 
 	std::unique_ptr<Renderer> renderer = std::make_unique<Renderer>();
@@ -82,7 +82,6 @@ int main(int, char**)
 	scene->Add(std::move(std::make_unique<Sphere>(glm::vec3{ 0, 1, 0 }, 1.0f, std::make_shared<Metal>(glm::vec3{ 0.8f, 0.8f, 0.8f }, 0.0f))));
 	scene->Add(std::move(std::make_unique<Sphere>(glm::vec3{ -4, 1, 0 }, 1.0f, std::make_shared<Dielectric>(glm::vec3{ 1, 1, 1 }, 1.5f))));
 
-
 	scene->Add(std::move(std::make_unique<Sphere>(glm::vec3{ 0, 30, 0 }, 10.0f, std::make_shared<Emissive>(glm::vec3{ 10, 10, 10 }))));
 
 	// camera
@@ -90,8 +89,6 @@ int main(int, char**)
 	glm::vec3 lookAt{ 0, 0, 0 };
 	float focalLength = glm::length(eye - lookAt);
 	std::unique_ptr<Camera> camera = std::make_unique<Camera>(eye, lookAt, glm::vec3{ 0, 1, 0 }, 20.0f, glm::ivec2{ framebuffer->colorBuffer.width, framebuffer->colorBuffer.height }, 0.1f, focalLength);
-
-	// remove code here
 
 	bool quit = false;
 	SDL_Event event;
